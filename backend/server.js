@@ -10,7 +10,6 @@ const app = express();
 
 // Only connect to DB when not under test (tests manage their own in-memory DB)
 if (process.env.NODE_ENV !== 'test') {
-  console.log("URI:", process.env.MONGO_URI);
   connectDB();
 }
 
