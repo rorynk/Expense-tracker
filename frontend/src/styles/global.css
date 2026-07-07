@@ -1,0 +1,473 @@
+/* ===== Design tokens =====
+   Concept: a bookkeeper's ledger. Paper background, ink-black rules,
+   a brass/gold stamp accent for money, deep green for "on budget",
+   rust red for "over budget". Numbers set in mono like a receipt tape.
+*/
+:root {
+  --ink: #1b1d1a;
+  --paper: #efece2;
+  --paper-raised: #f8f6ee;
+  --line: #d9d3c2;
+  --brass: #b8892b;
+  --brass-dark: #8f6a1f;
+  --green: #35624a;
+  --rust: #a83e2c;
+  --muted: #6f6a5c;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--paper-raised);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass-dark);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Layout ===== */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+.brand span {
+  color: var(--brass);
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 10px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #cfcabc;
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 2px solid transparent;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link.active {
+  color: var(--paper);
+  border-left: 2px solid var(--brass);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  font-size: 13px;
+  color: #a5a091;
+}
+
+.sidebar-footer button {
+  background: none;
+  border: 1px solid #46443c;
+  color: var(--paper);
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.sidebar-footer button:hover {
+  border-color: var(--brass);
+}
+
+.main {
+  flex: 1;
+  padding: 36px 44px;
+  max-width: 1100px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  gap: 20px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ===== Cards / ledger sheets ===== */
+.sheet {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 24px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 18px 20px;
+  position: relative;
+}
+
+.stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Signature element: a rotated ink stamp showing budget status */
+.stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: rotate(-12deg);
+  line-height: 1.15;
+  opacity: 0.9;
+}
+
+.stamp.on-budget {
+  color: var(--green);
+}
+
+.stamp.over-budget {
+  color: var(--rust);
+}
+
+/* ===== Forms ===== */
+.form-sheet {
+  max-width: 420px;
+  margin: 60px auto;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--brass);
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn:hover {
+  background: #000;
+}
+
+.btn.primary {
+  background: var(--brass);
+  color: #1b1300;
+}
+
+.btn.primary:hover {
+  background: var(--brass-dark);
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.btn.danger {
+  background: var(--rust);
+  color: #fff;
+}
+
+.btn.small {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.error-text {
+  color: var(--rust);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.auth-switch a {
+  color: var(--brass-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ===== Table (the ledger) ===== */
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.ledger-table th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 10px;
+}
+
+.ledger-table td {
+  padding: 12px 10px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+.amount {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: rgba(184, 137, 43, 0.14);
+  color: var(--brass-dark);
+  font-weight: 600;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.row-actions button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 2px 4px;
+}
+
+.row-actions button:hover {
+  color: var(--ink);
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.toolbar select,
+.toolbar input {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper-raised);
+  font-size: 13px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--muted);
+}
+
+.empty-state h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.chart-sheet {
+  margin-top: 24px;
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  margin: 0 0 16px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 20px;
+  }
+  .nav-links {
+    flex-direction: row;
+  }
+  .sidebar-footer {
+    margin-top: 0;
+    margin-left: auto;
+  }
+  .main {
+    padding: 24px;
+  }
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
