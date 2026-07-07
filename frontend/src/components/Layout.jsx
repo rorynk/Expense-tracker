@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand">
-          Ledger<span>.</span>
+          Tally<span>.</span>
         </div>
         <nav className="nav-links">
           <NavLink to="/" end className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>

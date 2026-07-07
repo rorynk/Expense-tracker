@@ -20,7 +20,7 @@ const Register = () => {
 
   return (
     <div className="sheet form-sheet">
-      <h1 className="page-title">Open a ledger</h1>
+      <h1 className="page-title">Open a Tally</h1>
 
       <p className="page-subtitle" style={{ marginBottom: 24 }}>
         Takes about 20 seconds.

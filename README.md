@@ -1,11 +1,11 @@
-# Ledger — Expense Tracker
+# Tally — Expense Tracker
 
 A full-stack expense tracker: React (Vite) frontend, Node/Express API, MongoDB via Mongoose, JWT auth. Built as a portfolio piece — same stack as TaskFlow.
 
 ## Features
 - Register/login with JWT, passwords hashed with bcrypt
 - Create, edit, delete expenses (title, amount, category, date, notes)
-- Filter by category, paginated ledger table
+- Filter by category, paginated Tally table
 - Dashboard: total spend, current-month spend vs. budget (with an "on budget" / "over budget" stamp), spend-by-category pie chart, 12-month bar chart
 - Monthly budget you can set and edit inline
 - Every expense scoped to the logged-in user — one user can never see another's data
@@ -94,7 +94,7 @@ Send the JWT as `Authorization: Bearer <token>`.
 
 ## Ideas for extending this for your resume
 - Recurring expenses (subscriptions) with auto-generation
-- CSV export of the ledger
+- CSV export of the Tally
 - Multi-currency support
 - Shared/household budgets (multiple users on one budget)
 - Receipt image upload (would pair well with the Claude API, like in TaskFlow)
